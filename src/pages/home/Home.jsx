@@ -12,7 +12,7 @@ const Home = () => {
       <LatestNews />
       <NavBar />
       <div className="grid grid-cols-4 gap-6 my-12">
-        <div>
+        <div className="flex flex-col gap-6">
           <LeftColumn />
         </div>
         <div className="col-span-2">
