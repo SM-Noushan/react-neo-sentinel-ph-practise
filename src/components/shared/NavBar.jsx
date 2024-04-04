@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import userIcon from "/assets/user.png";
+import userDefaultIcon from "/assets/user.png";
 
 const NavList = (
   <>
@@ -71,7 +71,7 @@ const NavBar = () => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-14 rounded-full">
-              <img alt="user-icon" src={userIcon} />
+              <img alt="user-icon" src={userDefaultIcon} />
             </div>
           </div>
           <ul

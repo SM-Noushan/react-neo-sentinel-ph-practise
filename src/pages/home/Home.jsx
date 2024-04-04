@@ -11,7 +11,7 @@ const Home = () => {
       <PageHeader />
       <LatestNews />
       <NavBar />
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-4 gap-6 my-12">
         <div>
           <LeftColumn />
         </div>
