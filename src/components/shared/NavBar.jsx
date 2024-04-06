@@ -91,9 +91,15 @@ const NavBar = () => {
         </div>
         <Link
           to="/login"
-          className="btn bg-dark-02 hover:bg-stone-800 px-10 text-white text-xl font-semibold rounded-none"
+          className="btn bg-dark-02 hover:bg-stone-800 px-6 text-white text-xl font-semibold rounded-none"
         >
           Login
+        </Link>
+        <Link
+          to="/register"
+          className="btn bg-dark-02/85 hover:bg-stone-600 px-6 text-white text-xl font-semibold rounded-none"
+        >
+          Register
         </Link>
       </div>
     </div>
