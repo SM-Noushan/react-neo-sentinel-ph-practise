@@ -19,7 +19,7 @@ const Home = () => {
           <CenterColumn />
         </div>
         <div>
-          <RightColumn />
+          <RightColumn from="home" />
         </div>
       </div>
     </div>

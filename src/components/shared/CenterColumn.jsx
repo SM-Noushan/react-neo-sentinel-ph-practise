@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { FaUserGraduate } from "react-icons/fa6";
 import { BsBookmark, BsShare, BsEye } from "react-icons/bs";
+import SectionHeader from "./SectionHeader";
 const CenterColumn = () => {
   const ratingInputCount = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <>
+      <SectionHeader title="Neo Sentinel Home" styles="mb-8" />
       <Link to="/news-details">
         <div className="flex justify-between items-center bg-dark-07 py-3 px-5 rounded-t-md">
           <div className="flex items-center gap-4">

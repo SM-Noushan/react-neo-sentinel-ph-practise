@@ -6,8 +6,9 @@ import qZone2 from "/assets/qZone2.png";
 import qZone3 from "/assets/qZone3.png";
 import bgCover from "/assets/bg.png";
 import SectionHeader from "./SectionHeader";
+import PropTypes from "prop-types";
 
-const RightColumn = () => {
+const RightColumn = ({ from = "" }) => {
   const loginWithBtnCSS = "btn w-full outline outline-1 text-base";
   const instagramGradientID = "instagramGradient";
   return (
@@ -68,23 +69,28 @@ const RightColumn = () => {
           <img src={qZone3} alt="qZone-img" />
         </div>
       </div>
-      <div
-        className="text-center space-y-5 px-8 py-16 text-white"
-        style={{ backgroundImage: `url(${bgCover})` }}
-      >
-        <h1 className="text-[30px] leading-[45px] font-bold">
-          Create an Amazing Newspaper
-        </h1>
-        <p>
-          Discover thousands of options, easy to customize layouts, one-click to
-          import demo and much more.
-        </p>
-        <button className="bg-hotRed hover:bg-red-900 text-white rounded-none px-6 py-3.5 text-xl font-medium">
-          Learn More
-        </button>
-      </div>
+      {from && (
+        <div
+          className="text-center space-y-5 px-8 py-16 text-white"
+          style={{ backgroundImage: `url(${bgCover})` }}
+        >
+          <h1 className="text-[30px] leading-[45px] font-bold">
+            Create an Amazing Newspaper
+          </h1>
+          <p>
+            Discover thousands of options, easy to customize layouts, one-click
+            to import demo and much more.
+          </p>
+          <button className="bg-hotRed hover:bg-red-900 text-white rounded-none px-6 py-3.5 text-xl font-medium">
+            Learn More
+          </button>
+        </div>
+      )}
     </>
   );
 };
 
+RightColumn.propTypes = {
+  from: PropTypes.string,
+};
 export default RightColumn;
