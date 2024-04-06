@@ -20,7 +20,7 @@ const Register = () => {
     <div>
       <NavBar />
       <div className="bg-dark-06 py-20 px-24 rounded-md max-w-3xl mx-auto mt-12">
-        <h2 className="text-dark-02 text-4xl font-semibold text-center mb-24">
+        <h2 className="text-dark-02 text-4xl font-semibold text-center mb-12">
           Register your account
         </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
