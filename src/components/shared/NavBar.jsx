@@ -89,7 +89,10 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-        <Link className="btn bg-dark-02 hover:bg-stone-800 px-10 text-white text-xl font-semibold rounded-none">
+        <Link
+          to="/login"
+          className="btn bg-dark-02 hover:bg-stone-800 px-10 text-white text-xl font-semibold rounded-none"
+        >
           Login
         </Link>
       </div>
