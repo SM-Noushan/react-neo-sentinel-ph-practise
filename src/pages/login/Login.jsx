@@ -1,17 +1,36 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import NavBar from "../../components/shared/NavBar";
 import { useForm } from "react-hook-form";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 const Login = () => {
   const [passwordType, setPasswordType] = useState(true);
+  const [credentialError, setCredentialError] = useState(false);
+  const { logIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    const { emailAddress, password } = data;
+    logIn(emailAddress, password)
+      .then((userCredential) => {
+        setCredentialError(false);
+        navigate(location?.state ? location.state : "/");
+        // const user = userCredential.user;
+        // console.log("user :>> ", user);
+      })
+      .catch((error) => {
+        setCredentialError(true);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("Code :>> ", errorCode);
+        console.log("Message :>> ", errorMessage);
+      });
   };
   return (
     <div>
@@ -39,8 +58,14 @@ const Login = () => {
               type="email"
               placeholder="Enter your email address"
               {...register("emailAddress", {
-                required: true,
-                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+                required: {
+                  value: true,
+                  message: "Email required",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
               })}
               className="grow"
             />
@@ -64,9 +89,14 @@ const Login = () => {
               type={passwordType ? "password" : "text"}
               placeholder="Enter your password"
               {...register("password", {
-                required: true,
-                minLength: 6,
-                maxLength: 16,
+                required: {
+                  value: true,
+                  message: "Password required",
+                },
+                maxLength: {
+                  value: 20,
+                  message: "Max password length 20",
+                },
               })}
               className="grow"
             />
@@ -87,10 +117,14 @@ const Login = () => {
             value="Login"
             className="btn btn-lg w-full bg-dark-02 text-white rounded-md hover:bg-stone-800"
           />
-          {Object.keys(errors).length ? (
+          {(errors?.emailAddress?.message || errors?.password?.message) &&
+            !credentialError && (
+              <p className="text-hotRed font-semibold">
+                *Email and Password Required
+              </p>
+            )}
+          {credentialError && (
             <p className="text-hotRed font-semibold">*Invalid Credentials</p>
-          ) : (
-            ""
           )}
         </form>
         <h2 className="mt-4 text-center text-dark-03 font-semibold">
@@ -104,7 +138,6 @@ const Login = () => {
         </h2>
       </div>
     </div>
-    // pattern:    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!#$%^&*()_+{}|:"<>?]).{8,20}$/,
   );
 };
 

@@ -5,6 +5,9 @@ import Error from "../pages/error/Error";
 import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 import NewsDetails from "../pages/news-details/NewsDetails";
+import PrivateRoutes from "./PrivateRoutes";
+import HomeByNewsCategory from "../pages/home/HomeByNewsCategory";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -13,20 +16,38 @@ export const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        index: "/",
+        index: true,
         element: <Home />,
       },
       {
+        path: "/home/:catName",
+        element: <HomeByNewsCategory />,
+        loader: () => fetch("/data/news.json"),
+      },
+      {
         path: "/login",
-        element: <Login />,
+        element: (
+          <ProtectedRoutes>
+            <Login />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <ProtectedRoutes>
+            <Register />
+          </ProtectedRoutes>
+        ),
       },
       {
-        path: "/news-details",
-        element: <NewsDetails />,
+        path: "/news-details/:newsId",
+        element: (
+          <PrivateRoutes>
+            <NewsDetails />
+          </PrivateRoutes>
+        ),
+        loader: () => fetch("/data/news.json"),
       },
     ],
   },

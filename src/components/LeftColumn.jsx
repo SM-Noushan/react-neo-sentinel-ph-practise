@@ -18,6 +18,7 @@ const LeftColumn = () => {
         ) : (
           data.map((category) => (
             <NavLink
+              to={`/home/${category.name}`}
               key={category.id}
               className={({ isActive }) =>
                 isActive

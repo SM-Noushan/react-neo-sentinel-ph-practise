@@ -33,6 +33,15 @@ const NavList = (
 );
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        alert("Sign-out successful.");
+      })
+      .catch((error) => {
+        alert("An error happened, ", error);
+      });
+  };
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -67,7 +76,7 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end gap-2">
-        {user && (
+        {user ? (
           <div className="dropdown dropdown-end mt-1.5">
             <div
               tabIndex={0}
@@ -89,12 +98,11 @@ const NavBar = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <button onClick={logOut}>Logout</button>
+                <button onClick={handleLogOut}>Logout</button>
               </li>
             </ul>
           </div>
-        )}
-        {!user && (
+        ) : (
           <>
             <Link
               to="/login"
