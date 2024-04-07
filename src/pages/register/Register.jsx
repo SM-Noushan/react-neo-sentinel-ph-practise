@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { PiCirclesFourLight } from "react-icons/pi";
@@ -9,7 +9,8 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
   const [passwordType, setPasswordType] = useState(true);
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateProfileInfo } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,15 +19,12 @@ const Register = () => {
   const onSubmit = (data) => {
     const { fullName, photoURL, emailAddress, password } = data;
     createUser(emailAddress, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("user :>> ", user);
+      .then(() => {
+        updateProfileInfo(fullName, photoURL);
+        navigate("/");
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("Code :>> ", errorCode);
-        console.log("Message :>> ", errorMessage);
+      .catch(() => {
+        alert("Something went wrong. Try again");
       });
   };
   return (

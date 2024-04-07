@@ -1,38 +1,12 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import userDefaultIcon from "/assets/user.png";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import NavList from "./NavList";
 
-const NavList = (
-  <>
-    <NavLink
-      to="/"
-      className={({ isActive }) =>
-        isActive ? "font-semibold" : "hover:underline"
-      }
-    >
-      <li>Home</li>
-    </NavLink>
-    <NavLink
-      to="/about"
-      className={({ isActive }) =>
-        isActive ? "font-semibold" : "hover:underline"
-      }
-    >
-      <li>About</li>
-    </NavLink>
-    <NavLink
-      to="/career"
-      className={({ isActive }) =>
-        isActive ? "font-semibold" : "hover:underline"
-      }
-    >
-      <li>Career</li>
-    </NavLink>
-  </>
-);
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
+
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -66,13 +40,13 @@ const NavBar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-dark-03 text-lg"
           >
-            {NavList}
+            <NavList />
           </ul>
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-dark-03 text-lg gap-4">
-          {NavList}
+          <NavList />
         </ul>
       </div>
       <div className="navbar-end gap-2">
@@ -89,14 +63,8 @@ const NavBar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-md dropdown-content mt-3 z-[1] p-0 bg-gray-200 rounded-box  w-28 *:w-full"
+              className="menu menu-lg dropdown-content mt-3 z-[1] p-0 bg-gray-200 rounded-box  w-28 *:w-full"
             >
-              <li>
-                <a>Profile</a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
               <li>
                 <button onClick={handleLogOut}>Logout</button>
               </li>

@@ -18,18 +18,12 @@ const Login = () => {
   const onSubmit = (data) => {
     const { emailAddress, password } = data;
     logIn(emailAddress, password)
-      .then((userCredential) => {
+      .then(() => {
         setCredentialError(false);
         navigate(location?.state ? location.state : "/");
-        // const user = userCredential.user;
-        // console.log("user :>> ", user);
       })
-      .catch((error) => {
+      .catch(() => {
         setCredentialError(true);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("Code :>> ", errorCode);
-        console.log("Message :>> ", errorMessage);
       });
   };
   return (

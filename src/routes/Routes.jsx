@@ -8,6 +8,7 @@ import NewsDetails from "../pages/news-details/NewsDetails";
 import PrivateRoutes from "./PrivateRoutes";
 import HomeByNewsCategory from "../pages/home/HomeByNewsCategory";
 import ProtectedRoutes from "./ProtectedRoutes";
+import UnderDevelopment from "../pages/under-development/UnderDevelopment";
 
 export const router = createBrowserRouter([
   {
@@ -20,8 +21,25 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/about",
+        element: <UnderDevelopment />,
+      },
+      {
+        path: "/career",
+        element: <UnderDevelopment />,
+      },
+      {
         path: "/home/:catName",
         element: <HomeByNewsCategory />,
+        loader: () => fetch("/data/news.json"),
+      },
+      {
+        path: "/news-details/:newsId",
+        element: (
+          <PrivateRoutes>
+            <NewsDetails />
+          </PrivateRoutes>
+        ),
         loader: () => fetch("/data/news.json"),
       },
       {
@@ -39,15 +57,6 @@ export const router = createBrowserRouter([
             <Register />
           </ProtectedRoutes>
         ),
-      },
-      {
-        path: "/news-details/:newsId",
-        element: (
-          <PrivateRoutes>
-            <NewsDetails />
-          </PrivateRoutes>
-        ),
-        loader: () => fetch("/data/news.json"),
       },
     ],
   },
