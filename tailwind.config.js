@@ -8,6 +8,8 @@ export default {
         "dark-02": "#403F3F",
         "dark-03": "#706F6F",
         "dark-04": "#9F9F9F",
+        "dark-06": "#E7E7E7",
+        "dark-07": "#F3F3F3",
         hotRed: "#D72050",
         orange: "#FF8C47",
         blue: "#58A7DE",
