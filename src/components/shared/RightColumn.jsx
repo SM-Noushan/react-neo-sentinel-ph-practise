@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebook, FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiInstagram } from "react-icons/fi";
@@ -7,25 +8,56 @@ import qZone3 from "/assets/qZone3.png";
 import bgCover from "/assets/bg.png";
 import SectionHeader from "./SectionHeader";
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const RightColumn = ({ from = "" }) => {
+  const { user, createUserWithGoogle, createUserWithFacebook } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
   const loginWithBtnCSS = "btn w-full outline outline-1 text-base";
   const instagramGradientID = "instagramGradient";
+  const handleSignInWithFacebook = () => {
+    createUserWithFacebook()
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {
+        alert("Something went wrong. Try again");
+      });
+  };
+  const handleSignInWithGoogle = () => {
+    createUserWithGoogle()
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {
+        alert("Something went wrong. Try again");
+      });
+  };
   return (
     <>
-      <div className="space-y-6">
-        <SectionHeader title="Login With" />
-        <div className="space-y-3">
-          <button className={`${loginWithBtnCSS} outline-orange text-orange`}>
-            <FaGoogle />
-            Google
-          </button>
-          <button className={`${loginWithBtnCSS} outline-sky-500 text-sky-500`}>
-            <FaFacebook />
-            Facebook
-          </button>
+      {!user && (
+        <div className="space-y-6">
+          <SectionHeader title="Login With" />
+          <div className="space-y-3">
+            <button
+              onClick={handleSignInWithGoogle}
+              className={`${loginWithBtnCSS} outline-orange text-orange`}
+            >
+              <FaGoogle />
+              Google
+            </button>
+            <button
+              onClick={handleSignInWithFacebook}
+              className={`${loginWithBtnCSS} outline-sky-500 text-sky-500`}
+            >
+              <FaFacebook />
+              Facebook
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       <div className="my-12 space-y-6">
         <SectionHeader title="Find Us On" />
         <div className="rounded-md border border-dark-06 font-medium text-dark-03">
