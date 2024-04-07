@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { PiCirclesFourLight } from "react-icons/pi";
 import { SiNamecheap } from "react-icons/si";
 import NavBar from "../../components/shared/NavBar";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
   const [passwordType, setPasswordType] = useState(true);
+  const { createUser } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    const { fullName, photoURL, emailAddress, password } = data;
+    createUser(emailAddress, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("user :>> ", user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("Code :>> ", errorCode);
+        console.log("Message :>> ", errorMessage);
+      });
   };
   return (
     <div>
@@ -52,14 +65,13 @@ const Register = () => {
               placeholder="Enter photo url"
               {...register("photoURL", {
                 required: true,
-                pattern: /^https?:\/\/.*\/.*\.(png|jpg|jpeg|gif|webp).*$/i,
+                pattern: /^(https?:\/\/)?.*$/,
               })}
               className="grow"
             />
             {errors?.photoURL && (
               <span className="absolute -bottom-6 left-0 text-hotRed font-semibold text-sm">
-                *Required | Enter a valid URL (formats: png, jpg, jpeg, gif or
-                webp)
+                *Required | Enter a valid URL
               </span>
             )}
           </label>
@@ -166,7 +178,6 @@ const Register = () => {
         </h2>
       </div>
     </div>
-    // pattern:    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!#$%^&*()_+{}|:"<>?]).{8,20}$/,
   );
 };
 

@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import userDefaultIcon from "/assets/user.png";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const NavList = (
   <>
@@ -30,6 +32,7 @@ const NavList = (
   </>
 );
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -64,43 +67,49 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end gap-2">
-        <div className="dropdown dropdown-end mt-1.5">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-14 rounded-full">
-              <img alt="user-icon" src={userDefaultIcon} />
+        {user && (
+          <div className="dropdown dropdown-end mt-1.5">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-14 rounded-full">
+                <img alt="user-icon" src={userDefaultIcon} />
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-md dropdown-content mt-3 z-[1] p-0 bg-gray-200 rounded-box  w-28 *:w-full"
+            >
+              <li>
+                <a>Profile</a>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <button onClick={logOut}>Logout</button>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-md dropdown-content mt-3 z-[1] p-0 bg-gray-200 rounded-box  w-28 *:w-full"
-          >
-            <li>
-              <a>Profile</a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        </div>
-        <Link
-          to="/login"
-          className="btn bg-dark-02 hover:bg-stone-800 px-6 text-white text-xl font-semibold rounded-none"
-        >
-          Login
-        </Link>
-        <Link
-          to="/register"
-          className="btn bg-dark-02/85 hover:bg-stone-600 px-6 text-white text-xl font-semibold rounded-none"
-        >
-          Register
-        </Link>
+        )}
+        {!user && (
+          <>
+            <Link
+              to="/login"
+              className="btn bg-dark-02 hover:bg-stone-800 px-6 text-white text-xl font-semibold rounded-none"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="btn bg-dark-02/85 hover:bg-stone-600 px-6 text-white text-xl font-semibold rounded-none"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
