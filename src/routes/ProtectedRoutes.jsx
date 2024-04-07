@@ -9,7 +9,7 @@ const ProtectedRoutes = ({ children }) => {
   const location = useLocation();
   if (loading) return <Spinner />;
   if (!user) return children;
-  return <Navigate state={location.pathname} to="/"></Navigate>;
+  return <Navigate to={location?.state ? location.state : "/"}></Navigate>;
 };
 ProtectedRoutes.propTypes = {
   children: ProtoTypes.node.isRequired,
